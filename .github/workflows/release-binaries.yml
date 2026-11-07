@@ -20,11 +20,13 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Verify build manifest
+        id: manifest
         run: |
           $manifest = Get-Content custom-build.json -Raw | ConvertFrom-Json
           git merge-base --is-ancestor $manifest.reference HEAD
           if ($LASTEXITCODE -ne 0) { throw 'Build-95 reference missing' }
           if ($manifest.variant -notin 'A', 'B') { throw 'Select a custom variant branch' }
+          "variant=$($manifest.variant)" | Add-Content $env:GITHUB_OUTPUT
       - name: Setup runner MSVC x64
         uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756
         with:
@@ -76,7 +78,7 @@ jobs:
       - name: Upload portable archive
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: lichii-portable-${{ github.ref_name }}-${{ github.sha }}
+          name: lichii-portable-${{ steps.manifest.outputs.variant }}-${{ github.sha }}
           path: |
             artifacts/*.zip
             artifacts/*.sha256
