@@ -128,3 +128,7 @@ load test does not validate AMD graphics or gameplay. Existing async/Bounded set
 available; no additional heavy-skip experiment is enabled by default.
 
 The package includes README-SHADERS-FR.md with the in-app preparation steps and limitations.
+
+## Variant F — AMD all-in-one
+
+F is based on E, whose source already includes D and C. Thus F retains the AMD uneven ASTC mip fallback (#448), OoT fog/sky probe read-only binding fix (#351), and experimental shader preparation / Vulkan graphics pipeline libraries (#579). No duplicate cherry-picks are applied. Shader preparation is disabled by default and is not a measured AMD speedup. See README-SHADERS-FR.md in the portable archive. Preserve separate portable user directories and all original saves. Build, tests, and packaging must succeed in GitHub Actions before this version can be called test-ready. No RX 7800 XT gameplay validation has been performed.
