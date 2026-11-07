@@ -1,5 +1,5 @@
 {
-  "variant": "E",
+  "variant": "F",
   "reference": "222877d4f7c8945b2f31a87b76d09f0a92e4f1b8",
   "upstream": "https://github.com/zortos293/Lichii",
   "pr_heads": {
@@ -29,5 +29,5 @@
   ],
   "cache_version": 56,
   "gameplay_validated": false,
-  "notes": "Experimental E based on D. User reports shadows fixed in D; E libraries/warm-up change pipelines and require new AMD validation. Features disabled by default; no shader data included. Use isolated portable user directory and cache v56; no FPS claim."
+  "notes": "F integrates C texture corrections, D fog/sky probe fixes and E experimental shader warm-up; E was based on D and D on C. Shader warm-up disabled by default; RX 7800 XT gameplay not validated. Portable user directory and cache v56 isolated."
 }
