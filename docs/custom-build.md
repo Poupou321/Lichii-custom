@@ -65,3 +65,13 @@ PR 463's stale-upload optimization is enabled in B; EDEN_NX2_TC_SKIP_STALE=0 dis
 for a comparison if artifacts appear. EDEN_NX2_TC_LOG=1 enables its counters.
 The OOT network bypass from PR 408 stays at Game by default. No sharpening is an optional
 separate comparison, not a required AMD setting. Do not enable multiple experiments together.
+
+## Windows test portability
+
+The NUP metadata test closes its first reader before replacing the same temporary archive
+again: Windows forbids replacing an archive while those read handles remain open. All
+assertions are retained and the NUP writer/loader application code is unchanged from build 95.
+The bundled zlib has installation disabled; its standalone installation/example tests are
+also disabled with ZLIB_BUILD_TESTING=OFF. All Lichii CTest targets remain enabled.
+The other Windows test fixes only give the existing expected opcode/count constants
+matching unsigned types. PR 408's local bypass pointer is renamed to avoid member shadowing.
