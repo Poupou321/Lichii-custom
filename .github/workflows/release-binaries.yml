@@ -1,9 +1,6 @@
 name: Custom Windows x64 portable
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - custom/amd-fog-correction
 permissions:
   contents: read
 concurrency:

@@ -91,3 +91,9 @@ multi_range_buffers.TickFrame call; only GetMaxStorageBufferRange was added.
 This build may reveal other unrelated graphics issues and is not RX 7800 XT-tested.
 Compare D against C on the same scene and settings. Preserve all old builds. Do not
 reuse or migrate production saves; use a disposable copy.
+
+D test integration: the buffer-cache mock exposes its storage-buffer range capability.
+The existing read-only table test now expects the complete 80 MiB mapping, as required
+by #351; written/native caps are still checked. Additional cases verify a 128 MiB device
+limit and the 1 GiB software limit. All Lichii tests remain enabled.
+The custom workflow is manual-only (workflow_dispatch); push triggering is removed.

@@ -71,6 +71,9 @@ struct Runtime {
     u32 GetStorageBufferAlignment() const {
         return alignment;
     }
+    u64 GetMaxStorageBufferRange() const {
+        return max_storage_buffer_range;
+    }
     u32 GetUniformBufferAlignment() const {
         return 1;
     }
@@ -158,6 +161,7 @@ struct Runtime {
     }
 
     u32 alignment{256};
+    u64 max_storage_buffer_range{1ULL << 30};
     u32 allocations{}, downloads{}, uploads{}, finishes{}, waits{};
     u32 host_read_barriers{};
     u64 upload_bytes{}, waited_tick{};
@@ -383,13 +387,27 @@ TEST_CASE("Storage binding cache preserves native and table size policies", "[bu
     f.Descriptor(base, 256);
     REQUIRE(f.Bind().size == 4096);
     REQUIRE(f.Bind(false, true).size == 8 << 20);
-    REQUIRE(f.Bind(false, false, true).size == 64 << 20);
+    REQUIRE(f.Bind(false, false, true).size == 80U << 20);
     REQUIRE(f.Bind(true, false, true).size == 256);
     f.Descriptor(base, (1ULL << 32) | 256);
     REQUIRE(f.Bind().size == 8 << 20);
-    REQUIRE(f.Bind(false, false, true).size == 64 << 20);
+    REQUIRE(f.Bind(false, false, true).size == 80U << 20);
     f.Descriptor(base + (79 << 20), 0);
     REQUIRE(f.Bind(false, false, true).size == 1 << 20);
+}
+
+TEST_CASE("Read-only table bindings respect driver and one GiB limits", "[buffer_ports]") {
+    const bool driver_limited = GENERATE(true, false);
+    Fixture f;
+    f.runtime.max_storage_buffer_range = driver_limited ? 128ULL << 20 : 2ULL << 30;
+    constexpr GPUVAddr base = 0x4000000;
+    f.memory->Map(base, 0x10000000, 1152U << 20, Tegra::PTEKind::PITCH, true);
+    f.Descriptor(base, 256);
+    const u32 expected = driver_limited ? (128U << 20) - (64U << 10)
+                                       : (1U << 30) - (64U << 10);
+    REQUIRE(f.Bind(false, false, true).size == expected);
+    REQUIRE(f.Bind(true, false, true).size == 256);
+    REQUIRE(f.Bind(false, true).size == 8U << 20);
 }
 
 TEST_CASE("Storage binding cache does not reuse a destroyed address space", "[buffer_ports]") {
