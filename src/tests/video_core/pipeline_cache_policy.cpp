@@ -62,7 +62,7 @@ TEST_CASE("Pipeline keys keep only the attribute types active stages read",
     SECTION("the vertex program's input map masks the types") {
         const std::array<u64, 6> hashes{0, 2, 0, 0, 0, 3};
         const std::array<u64, 6> masks{0, first_four, 0, 0, 0, ~u64{0}};
-        CHECK(KeyedAttributeTypes(types, hashes, masks) == (types & first_four));
+        CHECK(KeyedAttributeTypes(types, hashes, masks) == types);
     }
     SECTION("inactive stages do not mask") {
         const std::array<u64, 6> hashes{0, 2, 0, 0, 0, 0};
@@ -74,11 +74,11 @@ TEST_CASE("Pipeline keys keep only the attribute types active stages read",
         const std::array<u64, 6> masks{0, 0, 0, 0, 0, ~u64{0}};
         CHECK(KeyedAttributeTypes(types, hashes, masks) == 0);
     }
-    SECTION("garbage in unread registers no longer changes the key") {
+    SECTION("VertexB keeps distinct types until the AMD regression is resolved") {
         const std::array<u64, 6> hashes{0, 2, 0, 0, 0, 3};
         const std::array<u64, 6> masks{0, first_four, 0, 0, 0, ~u64{0}};
         const u64 other = (types & first_four) | 0xabcd'0000'0000'0000;
-        CHECK(KeyedAttributeTypes(types, hashes, masks) ==
+        CHECK(KeyedAttributeTypes(types, hashes, masks) !=
               KeyedAttributeTypes(other, hashes, masks));
     }
 }

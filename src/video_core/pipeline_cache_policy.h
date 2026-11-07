@@ -49,10 +49,11 @@ constexpr u64 VertexAttributeMask(std::span<const std::array<bool, 4>> input_gen
 /// @param attribute_types Types of every attribute register.
 /// @param unique_hashes   Program hash of each stage, zero when the stage is off.
 /// @param attribute_masks ShaderInfo::vertex_attribute_mask of each stage.
-/// @return The types masked by every active stage, or all of them when VertexA is on.
+/// @return The types masked by every active stage, or all of them when a vertex program is on.
 constexpr u64 KeyedAttributeTypes(u64 attribute_types, std::span<const u64> unique_hashes,
                                   std::span<const u64> attribute_masks) {
-    if (unique_hashes.empty() || unique_hashes[0] != 0) {
+    if (unique_hashes.empty() || unique_hashes[0] != 0 ||
+        (unique_hashes.size() > 1 && unique_hashes[1] != 0)) {
         return attribute_types;
     }
     for (size_t stage = 1; stage < unique_hashes.size(); ++stage) {
