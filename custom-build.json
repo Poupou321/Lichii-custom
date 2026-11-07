@@ -1,0 +1,20 @@
+{
+  "variant": "A",
+  "reference": "222877d4f7c8945b2f31a87b76d09f0a92e4f1b8",
+  "upstream": "https://github.com/zortos293/Lichii",
+  "pr_heads": {
+    "408": "308c0ee995d00e28db02757b6b627d55a947f391"
+  },
+  "included": [
+    "408"
+  ],
+  "excluded": [
+    "465",
+    "463",
+    "437",
+    "432"
+  ],
+  "cache_version": 54,
+  "gameplay_validated": false,
+  "notes": "Build and test results are in the Actions run and validation logs, not predeclared here."
+}
