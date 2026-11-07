@@ -10,6 +10,9 @@ jobs:
   windows:
     runs-on: windows-2022
     timeout-minutes: 180
+    env:
+      SCCACHE_DIR: ${{ github.workspace }}/.sccache
+      SCCACHE_CACHE_SIZE: 3G
     defaults:
       run:
         shell: pwsh
@@ -40,6 +43,21 @@ jobs:
           arch: win64_msvc2022_64
           modules: qtcharts
           cache: false
+      - name: Install official sccache on the runner
+        run: |
+          $zip = Join-Path $env:RUNNER_TEMP 'sccache.zip'
+          Invoke-WebRequest -OutFile $zip https://github.com/mozilla/sccache/releases/download/v0.19.0/sccache-v0.19.0-x86_64-pc-windows-msvc.zip
+          Expand-Archive $zip -DestinationPath (Join-Path $env:RUNNER_TEMP 'sccache')
+          $bin = (Get-ChildItem -Recurse -Filter sccache.exe (Join-Path $env:RUNNER_TEMP 'sccache')).DirectoryName
+          $bin | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+      - name: Restore compiler cache
+        id: compiler-cache
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: .sccache
+          key: custom-msvc-${{ steps.manifest.outputs.variant }}-${{ runner.os }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            custom-msvc-${{ steps.manifest.outputs.variant }}-${{ runner.os }}-
       - name: Install official Vulkan SDK on the runner
         shell: powershell
         run: ./tools/windows/install-vulkan-sdk.ps1
@@ -61,13 +79,14 @@ jobs:
             -DYUZU_USE_BUNDLED_QT=OFF -DYUZU_USE_BUNDLED_SDL3=ON `
             -DENABLE_UPDATE_CHECKER=OFF -DUSE_DISCORD_PRESENCE=OFF `
             -DENABLE_WERROR=ON `
+            -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache `
             "-DCMAKE_PREFIX_PATH=$env:QT_ROOT_DIR" `
             "-DLICHII_BUILD_TAG=custom-$variant-$env:GITHUB_RUN_NUMBER" `
             -DLICHII_BUILD_PLATFORM=windows-x86_64
           if ($LASTEXITCODE -ne 0) { throw 'Configure failed' }
       - name: Build application and all tests
         run: |
-          cmake --build build/release --parallel 3
+          cmake --build build/release --parallel 4
           if ($LASTEXITCODE -ne 0) { throw 'Release build failed' }
       - name: Run registered tests
         run: |
@@ -85,6 +104,12 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
+      - name: Save compiler cache, including failed builds
+        if: always() && steps.compiler-cache.outcome == 'success'
+        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: .sccache
+          key: ${{ steps.compiler-cache.outputs.cache-primary-key }}
       - name: Upload diagnostics
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
