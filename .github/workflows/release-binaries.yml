@@ -42,7 +42,7 @@ jobs:
           target: desktop
           arch: win64_msvc2022_64
           modules: qtcharts
-          cache: false
+          cache: true
       - name: Install official sccache on the runner
         run: |
           $zip = Join-Path $env:RUNNER_TEMP 'sccache.zip'
