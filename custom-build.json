@@ -1,0 +1,27 @@
+{
+  "variant": "B",
+  "reference": "222877d4f7c8945b2f31a87b76d09f0a92e4f1b8",
+  "upstream": "https://github.com/zortos293/Lichii",
+  "pr_heads": {
+    "408": "308c0ee995d00e28db02757b6b627d55a947f391",
+    "465": "5787498b2a5b48da1d8c1bf043b5bbe23b841715",
+    "463": "d9afb52fb6e994d90f552ffbffd086dd16240558",
+    "437": "b6709c4a76b1ee67daf95d911aa6908fbcbca758",
+    "432": "2e69168aae86df70e73b513b8c2717ef8ca4a7c3"
+  },
+  "included": [
+    "408 (conservative VertexA/VertexB keys)",
+    "465",
+    "463 (both commits)",
+    "432 (supersedes original NaN part of 437)",
+    "437 (documentation only; driver fallback already in 408)"
+  ],
+  "excluded": [
+    "437 shader/usage cache migration",
+    "437 duplicate driver migration",
+    "408 VertexB input mask"
+  ],
+  "cache_version": 55,
+  "gameplay_validated": false,
+  "notes": "Build and test results are in the Actions run and validation logs, not predeclared here."
+}

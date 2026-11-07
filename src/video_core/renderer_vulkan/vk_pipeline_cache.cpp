@@ -792,11 +792,7 @@ GraphicsPipeline* PipelineCache::CurrentGraphicsPipeline() {
         // of Time: up to 20 keys for the same shaders, each built again in a later session).
         vertex_attribute_types = graphics_key.state.attribute_types;
         std::array<u64, Maxwell::MaxShaderProgram> attribute_masks{};
-        for (size_t stage = 0; stage < Maxwell::MaxShaderProgram; ++stage) {
-            if (graphics_key.unique_hashes[stage] != 0) {
-                attribute_masks[stage] = shader_infos[stage]->vertex_attribute_mask;
-            }
-        }
+        // Keep complete vertex types on AMD; task/mesh stages have no vertex input.
         graphics_key.state.attribute_types = VideoCommon::KeyedAttributeTypes(
             vertex_attribute_types, graphics_key.unique_hashes, attribute_masks);
     }
