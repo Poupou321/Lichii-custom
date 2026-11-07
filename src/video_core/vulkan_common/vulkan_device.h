@@ -330,6 +330,11 @@ public:
         return properties.properties.driverVersion;
     }
 
+    /// Returns the PCI device ID of the physical device.
+    u32 GetDeviceID() const {
+        return properties.properties.deviceID;
+    }
+
     /// Returns the device name.
     std::string_view GetModelName() const {
         return properties.properties.deviceName;
@@ -673,6 +678,12 @@ FN_MAX_LIMIT_LIST
     /// Returns the largest patch size (control points, and TCS output vertices) a pipeline allows.
     u32 GetMaxTessellationPatchSize() const {
         return properties.properties.limits.maxTessellationPatchSize;
+    }
+
+    /// EDEN_NX2_GPL=1 and the device has VK_EXT_graphics_pipeline_library with fast linking:
+    /// graphics pipelines are linked from per-stage libraries.
+    bool IsExtGraphicsPipelineLibrarySupported() const {
+        return graphics_pipeline_library_enabled;
     }
 
     /// Returns true if the device supports task and mesh shaders (VK_EXT_mesh_shader).
@@ -1300,6 +1311,7 @@ private:
         VkPhysicalDeviceSubgroupSizeControlProperties subgroup_size_control{};
         VkPhysicalDeviceTransformFeedbackPropertiesEXT transform_feedback{};
         VkPhysicalDeviceMaintenance5PropertiesKHR maintenance5{};
+        VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT graphics_pipeline_library{};
         VkPhysicalDeviceDepthStencilResolveProperties depth_stencil_resolve{};
         VkPhysicalDeviceCustomBorderColorPropertiesEXT custom_border_color{};
 
@@ -1309,6 +1321,12 @@ private:
     Extensions extensions{};
     Features features{};
     Properties properties{};
+
+    /// EDEN_NX2_GPL: kept out of the extension tables so a run without the switch creates the
+    /// device exactly as before.
+    bool graphics_pipeline_library_requested{};
+    VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT graphics_pipeline_library_features{};
+    bool graphics_pipeline_library_enabled{};
 
     VkPhysicalDeviceFeatures2 features2{};
     VkPhysicalDeviceProperties2 properties2{};

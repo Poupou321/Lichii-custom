@@ -16,7 +16,7 @@
 namespace VideoCommon {
 
 inline constexpr u32 OpenGLPipelineCacheVersion = 48;
-inline constexpr u32 VulkanPipelineCacheVersion = 55;
+inline constexpr u32 VulkanPipelineCacheVersion = 56;
 
 /// Earlier versions whose driver pipeline cache (vulkan_pipelines) is copied forward, newest
 /// first. Their shader caches are not: from version 54 graphics keys mask the vertex attribute
