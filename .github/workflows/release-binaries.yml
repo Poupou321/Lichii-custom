@@ -86,8 +86,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Configure failed' }
       - name: Build application and all tests
         run: |
-          cmake --build build/release --parallel 4
-          if ($LASTEXITCODE -ne 0) { throw 'Release build failed' }
+          cmake --build build/release --parallel 4 -- -k 0
+          $buildExit = $LASTEXITCODE
+          sccache --show-stats | Tee-Object diagnostics/sccache.txt
+          if ($buildExit -ne 0) { throw 'Release build failed' }
       - name: Run registered tests
         run: |
           ctest --test-dir build/release --output-on-failure --no-tests=error --timeout 300 2>&1 | Tee-Object diagnostics/ctest.txt
