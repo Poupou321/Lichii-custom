@@ -1,8 +1,9 @@
 {
-  "variant": "C",
+  "variant": "D",
   "reference": "222877d4f7c8945b2f31a87b76d09f0a92e4f1b8",
   "upstream": "https://github.com/zortos293/Lichii",
   "pr_heads": {
+    "351": "fd4141e48c35e7436abc36b0031e2d05782bf4bf",
     "408": "308c0ee995d00e28db02757b6b627d55a947f391",
     "432": "2e69168aae86df70e73b513b8c2717ef8ca4a7c3",
     "437": "b6709c4a76b1ee67daf95d911aa6908fbcbca758",
@@ -16,7 +17,8 @@
     "463 (both commits)",
     "432 (supersedes original NaN part of 437)",
     "437 (documentation only; driver fallback already in 408)",
-    "448 (AMD uneven ASTC mip fallback to RGBA8)"
+    "448 (AMD uneven ASTC mip fallback to RGBA8)",
+    "351 (full-range read-only table pointer bindings for OoT fog and sky probes)"
   ],
   "excluded": [
     "437 shader/usage cache migration",
@@ -25,5 +27,5 @@
   ],
   "cache_version": 55,
   "gameplay_validated": false,
-  "notes": "Experimental AMD terrain-line fix #448 added to variant B. Gameplay unverified on RX 7800 XT."
+  "notes": "Variant D builds on C: official merged #351 adapted to current GPU cache TickFrame. No actual gameplay validated; compare with C and B; save/cache isolated."
 }

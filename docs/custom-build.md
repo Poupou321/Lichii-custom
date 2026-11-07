@@ -79,3 +79,15 @@ matching unsigned types. PR 408's local bypass pointer is renamed to avoid membe
 ## Variant C — AMD distant terrain texture seams
 
 C starts from B with upstream PR #448. It keeps uneven-block-mip ASTC textures in RGBA8 rather than BC1/BC3 on AMD, addressing grid-like dark lines in distant terrain. It may use more VRAM. To disable, set `EDEN_NX2_UNEVEN_BCN_RGBA8=0` before starting; default is enabled for AMD. Compare B and C at identical settings, and preserve the originals. This is not yet tested on RX 7800 XT.
+
+## Variant D — OoT fog/sky light-probe correction
+
+D adds upstream #351 to C. The game samples lighting probes beyond the previous 64 MiB
+read-only table-pointer buffer limit, causing blown-out white fog. Read-only table pointers
+now bind to the end of the mapping, limited by the driver and 1 GiB. Writable buffers are
+unchanged. The Vulkan TickFrame conflict was resolved by keeping the pre-existing
+multi_range_buffers.TickFrame call; only GetMaxStorageBufferRange was added.
+
+This build may reveal other unrelated graphics issues and is not RX 7800 XT-tested.
+Compare D against C on the same scene and settings. Preserve all old builds. Do not
+reuse or migrate production saves; use a disposable copy.
