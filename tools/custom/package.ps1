@@ -9,7 +9,7 @@ foreach ($exe in 'lichii.exe', 'eden-cli.exe') {
 Copy-Item build/release/bin/* $stage -Recurse -Force
 Get-ChildItem $stage -File -Filter *.exe | Where-Object Name -NotIn 'lichii.exe','eden-cli.exe' | Remove-Item
 Get-ChildItem $stage -Recurse -File -Include *.pdb,*.ilk,*.lib,*.exp | Remove-Item
-windeployqt --release --no-translations --no-opengl-sw --dir $stage --plugindir "$stage/plugins" "$stage/lichii.exe"
+windeployqt --release --no-compiler-runtime --no-translations --no-opengl-sw --dir $stage --plugindir "$stage/plugins" "$stage/lichii.exe"
 if ($LASTEXITCODE -ne 0) { throw 'Qt deployment failed' }
 $crt = Join-Path $env:VCToolsRedistDir 'x64/Microsoft.VC143.CRT'
 if (-not (Test-Path $crt)) { throw 'MSVC redistributable DLL directory unavailable' }
