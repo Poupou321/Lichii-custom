@@ -1,6 +1,9 @@
 name: Custom Windows x64 portable
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - custom/amd-graphics-next
 permissions:
   contents: read
 concurrency:
@@ -28,7 +31,7 @@ jobs:
           $manifest = Get-Content custom-build.json -Raw | ConvertFrom-Json
           git merge-base --is-ancestor $manifest.reference HEAD
           if ($LASTEXITCODE -ne 0) { throw 'Build-95 reference missing' }
-          if ($manifest.variant -notin 'A', 'B') { throw 'Select a custom variant branch' }
+          if ($manifest.variant -notin 'A', 'B', 'C') { throw 'Select a custom variant branch' }
           "variant=$($manifest.variant)" | Add-Content $env:GITHUB_OUTPUT
       - name: Setup runner MSVC x64
         uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756

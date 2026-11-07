@@ -3,7 +3,7 @@
 Extract this archive to a NEW directory, separate from build 95. Keep `user/config/` beside
 lichii.exe. All emulator data for this package goes into its own user directory. Do not choose
 migration or point it at the existing installation. No saved games, firmware, keys, ROMs or
-precompiled game shaders are distributed. Do not extract A over B or either over build 95.
+precompiled game shaders are distributed. Do not extract one custom build over another or over build 95.
 Updates and Discord presence are disabled at compile time. No driver change is required by
 this package. Existing AMD Vulkan-capable drivers are needed to play.
 
@@ -75,3 +75,7 @@ The bundled zlib has installation disabled; its standalone installation/example 
 also disabled with ZLIB_BUILD_TESTING=OFF. All Lichii CTest targets remain enabled.
 The other Windows test fixes only give the existing expected opcode/count constants
 matching unsigned types. PR 408's local bypass pointer is renamed to avoid member shadowing.
+
+## Variant C — AMD distant terrain texture seams
+
+C starts from B with upstream PR #448. It keeps uneven-block-mip ASTC textures in RGBA8 rather than BC1/BC3 on AMD, addressing grid-like dark lines in distant terrain. It may use more VRAM. To disable, set `EDEN_NX2_UNEVEN_BCN_RGBA8=0` before starting; default is enabled for AMD. Compare B and C at identical settings, and preserve the originals. This is not yet tested on RX 7800 XT.
