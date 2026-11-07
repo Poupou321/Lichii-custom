@@ -43,6 +43,7 @@ New-Item -ItemType Directory -Force "$stage/user/config" | Out-Null
 'Isolated portable data. Keep this directory. Never extract over your build-95 installation.' | Set-Content "$stage/user/config/README.txt"
 Copy-Item custom-build.json "$stage/COMMITS.json"
 Copy-Item docs/custom-build.md "$stage/README-CUSTOM.md"
+Copy-Item docs/custom-shaders-fr.md "$stage/README-SHADERS-FR.md"
 Copy-Item LICENSE.txt "$stage/LICENSE.txt"
 git log --format=fuller "$($manifest.reference)..HEAD" | Set-Content "$stage/COMMITS.txt"
 "Source: https://github.com/$env:GITHUB_REPOSITORY/tree/$env:GITHUB_SHA`nRun: https://github.com/$env:GITHUB_REPOSITORY/actions/runs/$env:GITHUB_RUN_ID" | Set-Content "$stage/BUILD.txt"

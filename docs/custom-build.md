@@ -97,3 +97,34 @@ The existing read-only table test now expects the complete 80 MiB mapping, as re
 by #351; written/native caps are still checked. Additional cases verify a 128 MiB device
 limit and the 1 GiB software limit. All Lichii tests remain enabled.
 The custom workflow is manual-only (workflow_dispatch); push triggering is removed.
+
+## Variant E — experimental shader preparation
+
+E starts from the exact D source aadd0154fe18bb9504dbcf9adf009039e95f53d8 and ports
+upstream PR #579 at ecfeaa6a92fbd92b09e8eca1e1583b45b5e7fafc. D is retained as the
+rendering reference: its user reported that the black-shadow defect is resolved.
+This is a separate experiment, not a measured RX 7800 XT performance improvement.
+
+E adds in-app shader preparation from the user's existing game files and Vulkan graphics
+pipeline libraries. No game files, generated shaders, keys or firmware are included in this
+package or downloaded by the build. No Python or other developer tool is needed on the PC.
+The preparation uses CPU and the existing Vulkan driver on the PC before gameplay; first
+preparation can take a long time and use additional disk space. No duration is promised on AMD.
+
+The feature is disabled by default. When enabled, graphics pipeline libraries change SPIR-V
+resource bindings, so correct shadows in D do not establish correct rendering in E. Unsupported
+devices and unsupported pipeline paths use the ordinary pipeline path. Task/mesh and compute
+limits mean that not every first-visit pause can be eliminated.
+
+E uses cache version 56; D uses 55. Keep E in its own new directory with the provided user/config
+marker and let it build its own cache. Do not overwrite D's user directory or load its runtime caches as version 56. A manual read-only
+copy of the D v55 pipeline file may supply statistics to the warm builder; see README-SHADERS-FR.md.
+Use disposable copies of saves only; leave the original installation and saves intact.
+
+The Windows build remains manual-only, Release and x64, with all registered Lichii tests enabled.
+A compiler-cache fallback to D is only a CI speed optimization; runtime shader caches are separate.
+Build, test and package results must be read from the actual Actions run. A successful package
+load test does not validate AMD graphics or gameplay. Existing async/Bounded settings remain
+available; no additional heavy-skip experiment is enabled by default.
+
+The package includes README-SHADERS-FR.md with the in-app preparation steps and limitations.

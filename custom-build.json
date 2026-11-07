@@ -1,5 +1,5 @@
 {
-  "variant": "D",
+  "variant": "E",
   "reference": "222877d4f7c8945b2f31a87b76d09f0a92e4f1b8",
   "upstream": "https://github.com/zortos293/Lichii",
   "pr_heads": {
@@ -9,7 +9,8 @@
     "437": "b6709c4a76b1ee67daf95d911aa6908fbcbca758",
     "448": "af501da4b066e5b8c168b4ea795b516655bf82a6",
     "463": "d9afb52fb6e994d90f552ffbffd086dd16240558",
-    "465": "5787498b2a5b48da1d8c1bf043b5bbe23b841715"
+    "465": "5787498b2a5b48da1d8c1bf043b5bbe23b841715",
+    "579": "ecfeaa6a92fbd92b09e8eca1e1583b45b5e7fafc"
   },
   "included": [
     "408 (conservative VertexA/VertexB keys)",
@@ -18,14 +19,15 @@
     "432 (supersedes original NaN part of 437)",
     "437 (documentation only; driver fallback already in 408)",
     "448 (AMD uneven ASTC mip fallback to RGBA8)",
-    "351 (full-range read-only table pointer bindings for OoT fog and sky probes)"
+    "351 (full-range read-only table pointer bindings for OoT fog and sky probes)",
+    "579 (experimental Vulkan graphics pipeline libraries and in-app shader warm-up; port to build-95/D)"
   ],
   "excluded": [
     "437 shader/usage cache migration",
     "437 duplicate driver migration",
     "408 VertexB input mask"
   ],
-  "cache_version": 55,
+  "cache_version": 56,
   "gameplay_validated": false,
-  "notes": "Variant D builds on C: official merged #351 adapted to current GPU cache TickFrame. No actual gameplay validated; compare with C and B; save/cache isolated."
+  "notes": "Experimental E based on D. User reports shadows fixed in D; E libraries/warm-up change pipelines and require new AMD validation. Features disabled by default; no shader data included. Use isolated portable user directory and cache v56; no FPS claim."
 }
