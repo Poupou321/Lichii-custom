@@ -1,0 +1,127 @@
+{
+  "variant": "F",
+  "reference": "89440b29a90708c0fefc126b2bd8c7a64a996bdd",
+  "reference_tag": "build-117",
+  "upstream": "https://github.com/zortos293/Lichii",
+  "reference_release": "https://github.com/zortos293/Lichii/releases/tag/build-117",
+  "source_e": "dc01ef09825c00d0b0a1631f7c257f7a154461ba",
+  "preserved_branches": {
+    "custom/amd-graphics-next": "97bb9e0310b4b86da31618f8f666bcd197a12088",
+    "custom/amd-fog-correction": "aadd0154fe18bb9504dbcf9adf009039e95f53d8",
+    "custom/amd-shader-warmup": "dc01ef09825c00d0b0a1631f7c257f7a154461ba"
+  },
+  "official_prs_preserved": {
+    "149": {
+      "merge_commit": "79f284eab8674d5ce90165c58353fed9550efee6",
+      "merge_is_ancestor_of_reference": true,
+      "files": [
+        "src/shader_recompiler/frontend/ampere/lower_to_maxwell.h",
+        "src/video_core/fence_manager.h"
+      ]
+    },
+    "214": {
+      "merge_commit": "186d4dd1b8cd567ca5da9e653ab2ab9049aeb5f8",
+      "merge_is_ancestor_of_reference": true,
+      "files": [
+        "tools/nx2/extract_static_shaders.py",
+        "tools/nx2/playthrough_hints.py",
+        "tools/nx2/shader-sweep.md",
+        "tools/nx2/shader_archive.py",
+        "tools/nx2/shader_containers.py",
+        "tools/nx2/shader_sweep.py",
+        "tools/nx2/test_shader_archive.py",
+        "tools/nx2/test_shader_containers.py",
+        "tools/nx2/test_shader_sweep.py",
+        "tools/shader-sweep/main.cpp",
+        "tools/shader-sweep/test_cli.py"
+      ]
+    },
+    "215": {
+      "merge_commit": "7ae3e740147e246efb582ea173bfe54d7ec130bd",
+      "merge_is_ancestor_of_reference": true,
+      "files": [
+        "src/video_core/engines/maxwell_3d.cpp",
+        "src/video_core/macro.cpp",
+        "src/video_core/query_cache/query_cache_base.h",
+        "src/video_core/query_dma.h",
+        "src/video_core/rasterizer_interface.h",
+        "src/video_core/renderer_vulkan/vk_rasterizer.cpp",
+        "src/video_core/renderer_vulkan/vk_rasterizer.h"
+      ]
+    },
+    "273": {
+      "merge_commit": "28d99d3dad14d46a3ac42bc13cb7282fcb0e5dab",
+      "merge_is_ancestor_of_reference": true,
+      "files": [
+        "src/shader_recompiler/backend/spirv/emit_spirv_warp.cpp",
+        "src/shader_recompiler/backend/spirv/spirv_emit_context.cpp",
+        "src/shader_recompiler/ir_opt/texture_pass.cpp",
+        "src/shader_recompiler/profile.h",
+        "src/tests/CMakeLists.txt",
+        "src/tests/video_core/ampere_logged_textures.cpp",
+        "src/tests/video_core/pipeline_optimization.cpp",
+        "src/tests/video_core/spirv_atomic_retry.cpp",
+        "src/tests/video_core/spirv_fragment_shuffle.cpp",
+        "src/video_core/CMakeLists.txt",
+        "src/video_core/renderer_vulkan/pipeline_optimization.h",
+        "src/video_core/renderer_vulkan/vk_compute_pipeline.cpp",
+        "src/video_core/renderer_vulkan/vk_pipeline_cache.cpp"
+      ]
+    },
+    "295": {
+      "merge_commit": "18cfe8556341a0b969a7ae28b71fb541632a90ca",
+      "merge_is_ancestor_of_reference": true,
+      "files": [
+        "src/shader_recompiler/backend/spirv/emit_spirv_memory.cpp",
+        "src/shader_recompiler/backend/spirv/spirv_emit_context.cpp",
+        "src/tests/CMakeLists.txt",
+        "src/tests/video_core/spirv_storage_alignment.cpp",
+        "src/video_core/renderer_vulkan/vk_rasterizer.cpp",
+        "src/video_core/renderer_vulkan/vk_rasterizer.h",
+        "src/video_core/renderer_vulkan/vk_scheduler.cpp",
+        "src/video_core/renderer_vulkan/vk_scheduler.h"
+      ]
+    },
+    "301": {
+      "merge_commit": "c87f09a84c7d22b90bf72c8408d23524e62b4f9a",
+      "merge_is_ancestor_of_reference": true,
+      "files": [
+        "AGENTS.md",
+        "src/video_core/CMakeLists.txt",
+        "src/video_core/renderer_vulkan/pipeline_build_trace.h",
+        "src/video_core/renderer_vulkan/vk_compute_pipeline.cpp",
+        "src/video_core/renderer_vulkan/vk_graphics_pipeline.cpp"
+      ]
+    }
+  },
+  "pr_heads": {
+    "351": "fd4141e48c35e7436abc36b0031e2d05782bf4bf",
+    "408": "308c0ee995d00e28db02757b6b627d55a947f391",
+    "432": "2e69168aae86df70e73b513b8c2717ef8ca4a7c3",
+    "437": "b6709c4a76b1ee67daf95d911aa6908fbcbca758",
+    "448": "af501da4b066e5b8c168b4ea795b516655bf82a6",
+    "463": "d9afb52fb6e994d90f552ffbffd086dd16240558",
+    "465": "5787498b2a5b48da1d8c1bf043b5bbe23b841715",
+    "579": "ecfeaa6a92fbd92b09e8eca1e1583b45b5e7fafc"
+  },
+  "included": [
+    "Full official build117 source and history",
+    "Targeted E additions as documented in docs/custom-f-code-integration.md"
+  ],
+  "excluded": [
+    "Duplicate E implementations of official #351, #432 and #465",
+    "E legacy cache migration across incompatible shader keys",
+    "Automatic release publishing and non-Windows build jobs"
+  ],
+  "cache_version": 11701,
+  "gameplay_validated": false,
+  "performance_measured_on_target": false,
+  "windows_toolchain": {
+    "compiler": "clang-cl 22.1.8",
+    "qt": "6.8.3",
+    "vulkan_sdk": "1.4.341.1",
+    "configuration": "Release + ThinLTO + official OoT PGO profile",
+    "profile_sha256": "a6bb81a2e65f35236749388647de834a42ab05a0bfbe077ecbf70b632a9e7a77"
+  },
+  "notes": "No hardware non-regression guarantee. Actual reference and F test/packaging logs included in successful artifact. Shader libraries and new experimental flags remain off by default. Portable data isolated from C/D/E and official build117."
+}
